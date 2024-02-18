@@ -6,7 +6,7 @@ import { exerciseOptions, fetchData } from "../utils/fetchData";
 const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const exercisePerPage = 2;
+  const exercisePerPage = 2; // Adjust this value as needed
   const memoizedSetExercises = useCallback(setExercises, [setExercises]);
 
   const indexOfLastExercise = currentPage * exercisePerPage;
@@ -36,10 +36,10 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
           exerciseOptions
         );
       }
-      setExercises(exercisesData);
+      memoizedSetExercises(exercisesData); // Use memoizedSetExercises here
     };
     fetchExercisesData();
-  },  [bodyPart, setExercises]);
+  },  [bodyPart, memoizedSetExercises]); // Include memoizedSetExercises in the dependency array
 
   return (
     <Box
@@ -66,7 +66,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         ))}
       </Stack>
       <Stack mt="100px" alignItems="center">
-        {exercises.length > 2 && (
+        {exercises.length > exercisePerPage && (
           <Pagination
             color="standard"
             shape="rounded"
